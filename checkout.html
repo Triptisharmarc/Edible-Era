@@ -1,0 +1,554 @@
+<?php 
+
+session_start();
+if( !empty($_SESSION['cart']) && isset($_POST['checkout']) ) {
+  //let user in
+  //send user to home page
+  }else{
+  header('location: index.php');
+  }
+  ?>
+  
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:100,200.300,400,500,,600,700"
+  />
+    <script
+    src="https://kit.fontawesome.com/1d73357de3.js"
+    crossorigin="anonymous"></script>
+    <style>
+        #form>input[type=text],
+        #form>input[type=number]
+         {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        #payment_form {
+            /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+            width: 33%;
+            margin: auto;
+            padding-bottom: 30px;
+            /* border-radius: 12px; */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            justify-content: space-between;             
+            padding: 10px 20px 10px 20px;
+             box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+             background-color: #fafafa;
+
+        }
+        .payment_form h1
+        { font-size: 300px;
+
+        }
+
+        #butto {
+            width: 20%;
+            padding: 12px;
+
+            /* border: 1px solid rgba(209, 213, 219); */
+            /* background-color: teal; */
+            /* border-radius: 4px; */
+            box-sizing: border-box;
+            margin-top: 35px;
+            margin-bottom: 16px;
+            resize: vertical;
+            border: #444444;
+            background-color: #444444;
+            color: white;
+            cursor: pointer;
+            align-items: center;
+        }
+        #butto:hover{
+             border: #dd0285;
+             background-color: #dd0285;
+         }
+
+        form {
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 42px;
+        }
+        #hea{
+            text-align: center;
+            /* font-size: ; */
+            font-size: 20px;
+        }
+        * {
+    font-family: "Roboto", sans-serif;
+  }
+  body {
+    background-color: #fcd357; /* Background color set to #ffc107 */
+    font-family: 'Poppins', sans-serif; /* Use Poppins font family */
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+  }
+  
+  .control {
+    margin: 10px 0px;
+    border: 1px solid #e6e6e6;
+    border-radius: 2px;
+    color: #b3b3b3;
+  }
+  
+  
+  
+  .fa-magnifying-glass {
+    color: white;
+  }
+  
+  
+  
+  ::placeholder {
+    color: #b3b3b3;
+    opacity: 1;
+  }
+  
+  
+  .header-links{
+    display: flex;
+  }
+  
+  .wishlist-div {
+    margin-right: 10px;
+  }
+  .wishlist {
+    padding: 8px;
+    border: 1px solid black;
+  }
+  .fa-heart {
+    font-size: 18px;
+    color: black;
+  }
+  
+  .user {
+    padding: 8px;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+  }
+  .fa-user {
+    font-size: 18px;
+    color: black;
+  }
+  
+  .btn {
+    background-color: white;
+    color: black;
+  }
+  
+  .btn:hover{
+    background-color: #dd0285;
+    color: white;
+  }
+  .loginRegisterDropdown {
+    list-style: none;
+    background-color: white;
+    width: 5%;
+    text-align: left;
+    padding: 10px 40px 10px 10px;
+    display: none;
+    position:absolute;
+    margin: 3rem 0 0 3rem;
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+  }
+  
+  .loginRegisterDropdown li{
+      margin: 7px;
+  }
+  
+  .loginRegisterDropdown li a{
+      text-decoration: none;
+      color: black;
+  }
+  
+  .loginRegisterDropdown li a:hover{
+      color: #dd0285;
+  }
+  
+  .nav-menu ul li a{
+    text-decoration: none;
+    color: black;
+  }
+  
+  .nav-menu ul li{
+    list-style: none;
+  }
+  
+  .nav-bar{
+    width: 100%;
+    height: 51px;
+    background: #dd0285;
+  }
+  
+  .nav-menu{
+    width: 84%;
+    margin: auto;
+  }
+  
+  
+  .nav-links{
+    float: left;
+    position: relative;
+  }
+  
+  .nav-menu ul li a{
+    display: block;
+    padding: 16px 26px;
+    color: white;
+    font-weight: bold;
+  
+  }
+  
+  .nav-menu ul li div{
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    width: max-content;
+  
+  }
+  
+  .nav-menu ul li:hover div{
+    display: flex;
+  }
+  
+  .nav-menu ul li div ul{
+  padding-left: 10px;
+  width: max-content;
+  }
+  
+  .nav-menu ul li div ul li p{
+    font-size: 13px;
+    padding: 0px 6px;
+    margin: 5px 0px;
+  }
+  .nav-menu ul li div ul li:first-child p{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .nav-menu ul li div img{
+    width: 50%;
+    height: 70%;
+    background-size: cover; 
+    margin-left: 10px;
+  }
+  .nav-cart{
+    padding-top: 15px;
+    width: 90%;
+  }
+  .nav-cart a{
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    float: right;
+    color: white;
+  }
+  .fa-bag-shopping{
+    padding-right: 20px;
+  }
+  footer {
+    color: white;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .footer-main-aj {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    background-color: #232323;
+  }
+  .footer-main-aj a {
+    text-decoration: none;
+    color: #a2a0a0;
+  }
+  .footer-bottom-2-aj {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    margin: auto;
+    font-weight: 100;
+    font-size: medium;
+    background-color: rgba(0, 0, 0, 0.65);
+    border-top: 1px rgb(76, 74, 74) solid;
+    color: #a5a7a0;
+    font-size: 13px;
+  }
+  .footer-bottom-1-aj {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px rgb(76, 74, 74) solid;
+    padding: 10px 0;
+  }
+  
+  .enter-signup-text {
+    height: 50px;
+    width: 300px;
+    border: none;
+    color: #999999;
+    box-sizing: border-box;
+    padding-left: 10%;
+    font-size: 18px;
+  }
+  
+  ::placeholder {
+    font-size: 16px;
+  }
+  
+  .enter-signup-button {
+    background-color: #dd0285;
+    font-size: 1rem;
+    color: whitesmoke;
+    font-weight: 700;
+    width: 100px;
+    border: none;
+    height: 50px;
+  }
+  .footer-right-signup div:first-child {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .footer-top {
+    margin: auto;
+    padding-top: 1%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+  }
+  .footer-main-aj li {
+    list-style: circle;
+    list-style-position: inside;
+    margin-bottom: 10px;
+  }
+  
+  .footer-main-aj li:hover,
+  .footer-main-aj a:hover,
+  .categories span:hover {
+    color: #dd0285;
+  }
+  .socials-wrap .links-contact {
+    display: flex;
+  
+    gap: 5%;
+  }
+  
+  .li-social a {
+    display: block;
+    background-color: #dd0285;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px 0;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+  }
+  .links-contact li {
+    list-style: none;
+  }
+  
+  .links li a span,
+  .phone,
+  .time {
+    font-size: medium;
+    color: #999999;
+  }
+  .footer-block-title {
+    display: inline-block;
+    padding-bottom: 10px;
+    margin: 10px 10px 10px 48px;
+    border-bottom: 2px dashed #dd0285;
+  }
+  .footer-main-aj h3 {
+    font-size: medium;
+  }
+  .divide {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    gap: 10vh;
+  }
+  .fa {
+    color: white;
+  }
+  .phone:hover,
+  .time:hover {
+    color: #999999 !important;
+  }
+  .phone,
+  .time {
+    margin: 10px 0 !important;
+  }
+  .footer-block-title {
+    font-size: 22px;
+  }
+  .footer-block-title h3{
+    margin: 5px;
+  }
+  
+  .links {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 40px 0;
+        
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    flex: 1;
+    margin-right: 30px;
+}
+
+.footer-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.app-logos img {
+    width: 120px;
+    margin-right: 10px;
+}
+
+.social-links {
+    list-style: none;
+    display: flex;
+}
+
+.social-links li {
+    margin-right: 15px;
+}
+
+.customer-service-links {
+    list-style: none;
+}
+
+.customer-service-links li {
+    margin-bottom: 10px;
+}
+
+.divider {
+    border: 1px solid #fff;
+    margin: 20px 0;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 20px;
+}
+    </style>
+</head>
+
+<body>
+  
+      
+      
+      <div class="nav-cart">
+        <a href="./webpage-cart.html"><i class="fa-solid fa-bag-shopping"></i>MY CART</a>
+      </div>
+    </div>
+  </header>
+    <div id="payment_form">
+        <h1>Edible Era</h1>
+        <hr>
+        <h1 id="hea"><bold>Buy Now</bold> </h1>
+        <form id="form" action="server/place_order.php">
+            <label for="Card">Name</label><br>
+            <input type="text" onkeyup="formatCreditCard(this)" id="credit-card" placeholder="Name"
+                maxlength="19" required />
+            <label for="CVV">Phone number</label><br>
+            <input type = "number" id="cvNumber" placeholder="Phone number" maxlength = "3" oninput="formatcvv(this)" required/>
+            <label for="date">Address</label><br>
+            <input type="text" onkeyup="formatExpiryDate(this)" id="expiryDate" placeholder="Address" maxlength="5"
+                required />
+            <div class="form-group checkout-btn-container">
+              <p>Total Amount : Rs. <?php echo $_SESSION['total'];?></p>
+            <input type="submit" class ="btn" id ="checkout-btn" name="checkout" value="Checkout">
+            </div>
+          </form>
+    </div>
+
+
+    <div class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="footer-col-1">
+                  <h3>Download our app</h3>
+                  <p>Top G5  Enabled Prodcuts with good support</p>
+                  <div class="app-logo">
+                     
+                  </div>
+              </div>
+              <div class="footer-col-2">
+                  <img src="images" alt="">
+                  <p>Best technology enabled product?</p>
+              </div>
+              <div class="footer-col-3">
+                  <h3>Useful Links</h3>
+                  <ul>
+                      <li>Coupons</li>
+                      <li>Blog Post</li>
+                      <li>Return Policy</li>
+                      <li>Join Affiliate</li>
+                  </ul>
+              </div>
+              <div class="footer-col-4">
+                  <h3>Follow Us</h3>
+                  <ul>
+                      <li>Facebook</li>
+                      <li>Twitter</li>
+                      <li>Instagram</li>
+                      <li>YouTube</li>
+                  </ul>
+              </div>
+          </div>
+          <hr>
+          <p class="copyright">Copyright 2021 Sarthak</p>
+      </div>
+  </div>
+  <script src="main.js"></script>
+      <!--Load the API from the specified URL
+      * The async attribute allows the browser to render the page while the API loads
+      * The key parameter will contain your own API key (which is not needed for this tutorial)
+      * The callback parameter executes the initMap() function
+      -->
+  
+</body>
+</html>
